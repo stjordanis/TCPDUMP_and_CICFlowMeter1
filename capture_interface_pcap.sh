@@ -10,7 +10,7 @@ rotate_interval=60
 interface="eth0"
 output_dir="pcap"
 user="root"
-max_seconds=5
+max_seconds=0
 while getopts ":i:m:d:Z:G:" option; do
     case "${option}" in
         m)
@@ -78,7 +78,6 @@ options="-n -nn -N -s 0"
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  # On the same directory.
 post_rotate_command="${script_dir}"/convert_pcap_csv.sh
 
-timeout_time=$(echo "${max_seconds} + 3 + ${rotate_interval}*0.2" | bc)
 sudo timeout "$max_seconds" tcpdump ${options} -z "${post_rotate_command}" -i ${interface} -G ${rotate_interval} -w "${output_file_format}"
 
 #sudo chown 1000:1000 "${output_dir}"/*
