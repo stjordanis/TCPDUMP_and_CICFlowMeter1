@@ -9,4 +9,4 @@ RUN chmod +x capture_interface_pcap.sh
 RUN sed -i 's|sudo||g' ./capture_interface_pcap.sh
 
 ENTRYPOINT ["./capture_interface_pcap.sh"]
-CMD ["-i", "eth0","-d", "pcap", "-Z", "root","-G", "10", "-m", "10"]
+CMD ["-i", "eth0","-d", "pcap", "-Z", "root","-G", "10"]
