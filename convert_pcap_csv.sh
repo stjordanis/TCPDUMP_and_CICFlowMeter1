@@ -70,8 +70,5 @@ rm -f "${pcap_file}"
 #cic_dir="${script_dir}"/CICFlowMeters/CICFlowMeterV3-jnetpcap-1.4
 #java -Djava.library.path="${cic_dir}" -jar "${cic_dir}"/CICFlowMeterV3.jar "${pcap_tmp}" "${output_dir}/3.1.4/"
 
-
-#echo "+++ remove ${pcap_tmp}"
-#rm -f "${pcap_tmp}"
-
-
+echo "+++ remove ${pcap_tmp}"
+rm -f "${pcap_tmp}"

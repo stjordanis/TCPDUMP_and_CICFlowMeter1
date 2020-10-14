@@ -1,9 +1,34 @@
 #!/bin/bash
 
-interface=$1
-output_dir=$2
-user=$3
+usage() {
+    echo \
+    "Usage: $0 [-i interface] [-d out_dir] [-Z user] [-G rotate_seconds]" 1>&2
+}
+
 rotate_interval=60
+interface="eth0"
+output_dir="pcap"
+user="root"
+while getopts ":i:w:Z:G:" option; do
+    case "${option}" in
+        i)
+            interface="${OPTARG}"
+            ;;
+        d)
+            output_dir="${OPTARG}"
+            ;;
+        Z)
+            user="${OPTARG}"
+            ;;
+        G)
+            rotate_interval="${OPTARG}"
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
 
 [[ "$(grep -c "$interface" /proc/net/dev)" == "0" ]] && echo "The interface is NOT found!" && exit 255
 [[ ! -d "$output_dir" ]] && echo "The output directory does NOT exist!" && exit 255
@@ -13,7 +38,7 @@ cleanup() {
 	echo "=== Capturer is being cancled ==="
     echo "=== Wait the converter finished for 3 seconds..."
 	sleep 3
-	echo 
+	echo
 	echo "=== Convert left PCAP files if any"
 	OIFS="$IFS"
 	IFS=$'\n'
@@ -26,7 +51,7 @@ cleanup() {
     echo "=== Clean stuff up"
     rm -f "$output_dir"/*.pcap
 
-	echo 
+	echo
     exit 0
 }
 
@@ -51,4 +76,3 @@ post_rotate_command="${script_dir}"/convert_pcap_csv.sh
 sudo tcpdump ${options} -z "${post_rotate_command}" -i ${interface} -G ${rotate_interval} -w "${output_file_format}"
 
 #sudo chown 1000:1000 "${output_dir}"/*
-
