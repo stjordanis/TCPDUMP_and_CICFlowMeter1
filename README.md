@@ -37,19 +37,20 @@ Each time that PCAP file is saved,
 
 
 ```bash
-capture_interface_pcap.sh <interface> <pcap_output_dir> [priviledged_user_name]
+capture_interface_pcap.sh [-i interface] [-d pcap_output_dir]
+                          [-Z priviledged_user_name] [-G rotate_seconds]
 ```
 
 For example:
 
 ```bash
-capture_interface_pcap.sh wlan0 pcap
+capture_interface_pcap.sh -i wlan0 -d pcap
 ```
 
 or
 
 ```bash
-capture_interface_pcap.sh eth0 output_dir bobuser
+capture_interface_pcap.sh -i eth0 -d output_dir -Z bobuser
 ```
 
 
@@ -291,4 +292,3 @@ After the distribution package was gotten,
 ## To Build CICFlowMeter-4
 
 - __gradle__ and __maven__ are required
-

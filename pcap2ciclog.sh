@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./capture_interface_pcap.sh wlan0 pcap $(id -nu 1000)
+./capture_interface_pcap.sh -i wlan0 -d pcap -Z "$(id -nu 1000)"
