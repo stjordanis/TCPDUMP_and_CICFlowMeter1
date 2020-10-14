@@ -2,15 +2,20 @@
 
 usage() {
     echo \
-    "Usage: $0 [-i interface] [-d out_dir] [-Z user] [-G rotate_seconds]" 1>&2
+    "Usage: $0 [-i interface] [-d out_dir] [-Z user] [-G rotate_seconds] \
+[-m max_seconds]" 1>&2
 }
 
 rotate_interval=60
 interface="eth0"
 output_dir="pcap"
 user="root"
-while getopts ":i:w:Z:G:" option; do
+max_seconds=5
+while getopts ":i:m:d:Z:G:" option; do
     case "${option}" in
+        m)
+            max_seconds="${OPTARG}"
+            ;;
         i)
             interface="${OPTARG}"
             ;;
@@ -73,6 +78,7 @@ options="-n -nn -N -s 0"
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  # On the same directory.
 post_rotate_command="${script_dir}"/convert_pcap_csv.sh
 
-sudo tcpdump ${options} -z "${post_rotate_command}" -i ${interface} -G ${rotate_interval} -w "${output_file_format}"
+timeout_time=$(echo "${max_seconds} + 3 + ${rotate_interval}*0.2" | bc)
+sudo timeout "$max_seconds" tcpdump ${options} -z "${post_rotate_command}" -i ${interface} -G ${rotate_interval} -w "${output_file_format}"
 
 #sudo chown 1000:1000 "${output_dir}"/*
