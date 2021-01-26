@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 usage() {
-	echo "\tconvert_pcap_csv.sh <PCAP> [-d <output_dir>]"
+	echo "\tconvert_pcap_csv.sh <PCAP> [-d <output_dir>] [-k]"
 	echo ""
 	echo "\tThis script takes pcap files and outputs them on the given
-\toutput_dir or on the current location under a folder named csv."
+\toutput_dir or on the current location under a folder named csv.
+\t-d sets the directory to save the pcap on.
+\t-k tell cicflowmeter not to remove the pcap"
 }
 
 convert() {
@@ -28,8 +30,10 @@ convert() {
 	trap 'cancel' INT TERM
 
 	cleanup() {
-	#    echo "+++ Remove ${pcap_file}"
-	#    rm -f "${pcap_file}"
+	    if [ -z "$keep_pcap" ]; then
+		    echo "+++ Remove ${pcap_file}"
+		    rm -f "${pcap_file}"
+	    fi
 
 		echo "+++ Finish the conversion"
 		echo
@@ -50,8 +54,10 @@ convert() {
 	"${cic}" "${pcap_file}" "${output_dir}"
 
 
-	echo "+++ Remove ${pcap_file}"
-	rm -f "${pcap_file}"
+	if [ -z "$keep_pcap" ]; then
+		echo "+++ Remove ${pcap_file}"
+		rm -f "${pcap_file}"
+	fi
 
 
 
@@ -84,11 +90,14 @@ convert() {
 }
 
 
-while getopts ":d:" option; do
+while getopts ":d:k" option; do
     case "${option}" in
         d)
             output_dir="${OPTARG}"
             ;;
+		k)
+			keep_pcap="1"
+			;;
         *)
             usage
             ;;
