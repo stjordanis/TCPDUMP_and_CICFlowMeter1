@@ -27,6 +27,25 @@ For trying, just run:
 try_me.sh
 ```
 
+There is a shortcut using the command.sh script to either just convert pcap
+files to csv or to also capture them using tcpdump.
+
+``` bash
+command.sh capture [ capture arguments ]
+command.sh convert [ convert arguments ] <PCAP>
+```
+
+## Docker
+
+Docker runs using the above command.sh by default:
+
+``` bash
+command.sh capture [ capture arguments ]
+command.sh convert [ convert arguments ] <PCAP>
+```
+
+capture arguments is what one would add to capture_interface_pcap.sh, while
+convert arguments take a -d for output directory and pcap files at the end.
 
 ## To Run Literally
 
