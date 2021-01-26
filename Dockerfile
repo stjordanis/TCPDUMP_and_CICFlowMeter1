@@ -6,7 +6,9 @@ tar zxf -
 
 WORKDIR tcpdump_and_cicflowmeter
 RUN chmod +x capture_interface_pcap.sh
+RUN chmod +x convert_pcap_csv.sh
+RUN chmod +x command.sh
 RUN sed -i 's|sudo||g' ./capture_interface_pcap.sh
 
-ENTRYPOINT ["./capture_interface_pcap.sh"]
-CMD ["-i", "eth0","-d", "pcap", "-Z", "root","-G", "10"]
+ENTRYPOINT ["./command.sh"]
+CMD ["capture", "-i", "eth0","-d", "pcap", "-Z", "root","-G", "10"]
