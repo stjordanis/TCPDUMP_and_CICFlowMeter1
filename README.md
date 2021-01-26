@@ -8,6 +8,10 @@ This project is about capturing packets flow through a network interface,
     and then automatically convert it to the feature-extracted CSV file by
     CICFlowMeter-3.0.
 
+It was forked by Iñigo Ortega (inigo@iortega.xyz) from
+https://github.com/iPAS/TCPDUMP_and_CICFlowMeter' and then modified to get a
+better cli experience.
+
 The CSV is meant to be analysed for intrusion detection.
 You can find further detail at the [website of CIC](http://www.unb.ca/cic).
 
@@ -45,7 +49,8 @@ command.sh convert [ convert arguments ] <PCAP>
 ```
 
 capture arguments is what one would add to capture_interface_pcap.sh, while
-convert arguments take a -d for output directory and pcap files at the end.
+convert arguments take a -d for output directory, -k to keep pcap files and
+pcap files at the end.
 
 ## To Run Literally
 
