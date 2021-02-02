@@ -60,7 +60,7 @@ convert() {
 	fi
 
 	filename=$(ls -t "${output_dir}" | head -n1)
-	filepath="${output_dir}${filename}"
+	filepath="${output_dir}/${filename}"
 	names=$(head -n1 "${filepath}")
 	sed -i "/Flow ID/d" "${filepath}"
 	echo "$names" | cat - "${filepath}" > "/tmp/${filename}"
