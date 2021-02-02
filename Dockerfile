@@ -1,7 +1,7 @@
 FROM openjdk:11-slim-buster
 RUN apt-get -qq update && apt-get -qq -y install wget tcpdump libpcap0.8-dev
 RUN wget -qO- \
-"https://codeberg.org/iortega/TCPDUMP_and_CICFlowMeter/archive/v0.2.tar.gz" | \
+"https://codeberg.org/iortega/TCPDUMP_and_CICFlowMeter/archive/v0.2.1.tar.gz" | \
 tar zxf -
 
 WORKDIR tcpdump_and_cicflowmeter
