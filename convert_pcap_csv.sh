@@ -59,7 +59,12 @@ convert() {
 		rm -f "${pcap_file}"
 	fi
 
-
+	filename=$(ls -t "${output_dir}" | head -n1)
+	filepath="${output_dir}/${filename}"
+	names=$(head -n1 "${filepath}")
+	sed -i "/Flow ID/d" "${filepath}"
+	echo "$names" | cat - "${filepath}" > "/tmp/${filename}"
+	mv "/tmp/${output_dir}" "${filepath}"
 
 
 	## Rearrange the PCAP due to other CICFlowMeter versions' compatibility
